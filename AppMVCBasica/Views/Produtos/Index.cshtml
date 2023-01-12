@@ -1,0 +1,79 @@
+﻿@model IEnumerable<AppMVCBasica.Models.ProdutoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Adicionar Produto</a>
+</p>
+<table class="table-response table">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fornecedor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @{/*Html.DisplayFor(modelItem => item.Imagem)*/}
+                @{
+                    if (item.Imagem != null && item.Imagem.Length > 0)
+                    {
+                        <img style="height:100px;width:100px" src="~/imagens/@Html.DisplayFor(modelItem => item.Imagem)" />
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @{
+                    if (item.Descricao != null && item.Descricao.Length >= 45)
+                    {
+                        @(item.Descricao.Substring(0,45) + "...")
+                    }else{
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                    }
+                }
+               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
+            </td>
+            <td align="right">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
